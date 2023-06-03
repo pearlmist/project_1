@@ -1,0 +1,119 @@
+extends template
+block variables
+    -    var title = 'Список манги'
+
+    -   const columnNames = ['Манга', 'Автор(ы)','Издатель','Аудитория','Количество томов','Публикация',"Примерные продажи"]
+
+    -   const mangaNames = ['One Piece. Большой куш','Golgo 13','Жемчуг дракона','Наруто','Детектив Конан','Black Jack','Slam Dunk','Kochira Katsushika-ku Kameari Kōen-mae Hashutsujo','Demon Slayer: Kimetsu no Yaiba','Pokémon Adventures','Дораэмон','Oishinbo','Блич','JoJo’s Bizarre Adventure','Атака на титанов','Astro Boy','Кулак Полярной звезды','The Kindaichi Case Files','Touch','Hajime no Ippo','Vagabond','Боец Баки','Captain Tsubasa','Sangokushi','Hunter × Hunter','Kinnikuman','Fairy Tail','Rurouni Kenshin','Стальной алхимик','Kingdom','Hana Yori Dango','Rokudenashi Blues','Aoki Densetsu Shoot!','The Prince of Tennis','Gintama','Bad Boys','H2','Major','Minami no Teiō','Ранма ½','Магическая битва','Моя геройская академия','City Hunter','Cobra','Devilman','Dragon Quest: Dai no Daibōken','Glass Mask','Initial D','Inuyasha','Токийский гуль']
+    -   const author = ['Эйитиро Ода','Такао Сайто','Акира Торияма','Масаси Кисимото','Госё Аояма','Осаму Тэдзука','Такэхико Иноуэ','Осаму Акимото','Коёхару Готогэ','Хидэнори Кусака, Мато, Сатоси Ямамото','Фудзико Фудзио','Тэцу Кария, Акира Ханасаки','Тайто Кубо','Хирохико Араки','Хадзимэ Исаяма','Осаму Тэдзука','Буронсон, Тэцуо Хара','Ёдзабуро Канари, Син Кибаяси, Фумия Сато','Мицуру Адати','Джордж Морикава','Такэхико Иноуэ','Кэйсукэ Итагаки','Ёити Такахаси','Мицутэру Ёкояма','Ёсихиро Тогаси','Yudetamago','Хиро Масима','Нобухиро Вацуки','Хирому Аракава','Ясухиса Хара','Ёко Камио','Масанори Морита','Цукаса Осима','Такэси Кономи','Хидэаки Сорати','Хироси Танака','Мицуру Адати','Такуя Мицуда','Дай Тэнноджи, Рикия Го','Румико Такахаси','Гэгэ Акутами','Кохэй Хорикоси','Цукаса Ходзё','Буити Тэрасава','Го Нагай','Рику Сандзё, Кодзи Инада','Судзуэ Миути','Сюити Сигэно','Румико Такахаси','Суи Исида']
+    -   const publisher = ['Shueisha','Shogakukan','Shueisha','Shueisha','Shogakukan','Akita Shoten','Shueisha','Shueisha','Shueisha','Shogakukan','Shogakukan','Shogakukan','Shueisha','Shueisha','Kodansha','Kobunsha','Shueisha','Kodansha','Shogakukan','Kodansha','Kodansha','Akita Shoten','Shueisha','Ushio Shuppansha','Shueisha','Shueisha','Kodansha','Shueisha','Enix, Square Enix','Shueisha','Shueisha','Shueisha','Kodansha','Shueisha','Shueisha','Shōnen Gahōsha','Shogakukan','Shogakukan','Nihon Bungeisha','Shogakukan','Shueisha','Shueisha','Shueisha','Shueisha','Kodansha','Shueisha','Hakusensha','Kodansha','Shogakukan','Shueisha']
+    -   const audith = ['Сёнэн','Сэйнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Кодомо','Сэйнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сэйнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сэйнэн','Сёдзё','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёдзё','Сэйнэн','Сэйнэн','Сэйнэн']
+    -   const ch_count = ['102','201','42','72','101','25','31','200','23','52','45','111','74','131','32','23','27','86','26','127','37','158','92','60','36','65','63','28','27','58','37','42','33','33','77','22','34','78','152','38','16','30','35','18','5','37','49','48','56','30']
+    -   const publish_time = ['1997 - настоящее время','1968 – настоящее время','1984–1995','1999–2014','1994 – настоящее время','1973–1983','1990–1996','1976–2016','2016–2020','1997 - настоящее время','1969–1996','1983–2014','2001–2016','1987 – настоящее время','2009–2021','1952–1968','1983–1988','1992 – настоящее время','1981–1986','1989 – настоящее время','1998–2015','1991 – настоящее время','1981 - настоящее время','1971–1986','1998 – настоящее время','1979 - настоящее время','2006–2017','1994–1999','2001–2010','2006 - настоящее время','1992–2003','1988–1997','1990–2003','1999–2008','2003–2019','1988–1996','1992–1999','1994–2010','1992 - настоящее время','1987–1996','2018 - настоящее время','2014 - настоящее время','1985–1991','1978–1984','1972–1973','1989–1996','1976 - настоящее время','1995–2013','1996–2008','2011–2018']
+    -   const sales_num = ['500 миллионов','300 миллионов','260 миллионов','270 миллионов','233 миллионов','176 миллионов','157 миллионов','157 миллионов','150 миллионов','150 миллионов','140 миллионов','130 миллионов','120 миллионов','120 миллионов','110 миллионов','100 миллионов','100 миллионов','100 миллионов','100 миллионов','96 миллионов','82 миллионов','80 миллионов','80 миллионов','80 миллионов','79 миллионов','75 миллионов','72 миллионов','72 миллионов','70.3 миллионов','70 миллионов','61 миллионов','60 миллионов','60 миллионов','60 миллионов','55,5 миллионов','55 миллионов','55 миллионов','53 миллионов','53 миллионов','53 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','47 миллионов']
+
+block content
+    body(onload = "drawTable()")
+        .galleryGridsort
+            .details_block
+                details
+                    summary График
+                    form
+                        .field
+                            legend Значение по оси OX:
+                                br
+                                input(type='radio' name='education' value='first')
+                                |  Аудитория
+                                br
+                                input(type='radio' name='education' value='second')
+                                |  Издатель
+                                br
+                                input(type='radio' name='education' value='third')
+                                |  Автор(ы)
+                                br
+                        .field
+                            legend Результат:
+                                br
+                                input(type='radio' name='subject' value='web')
+                                |  Количество томов
+                                br
+                                input(type='radio' name='subject' value='db')
+                                |  Примерные продажи
+                                br
+                                input(type='radio' name='subject' value='oop')
+                                |  Публикация
+                                br
+                                input(type="button" value="Построить")
+            .details_block
+                details
+                    summary Фильтр
+                    br
+                    label Название:
+                        input(type='text' name='name' id='NameFilter')
+                    br
+                    label Автор(ы):
+                        input(type='text' name='author' id='AuthorFilter')
+                    br
+                    label Издатель:
+                        input(type='text' name='publisher' id='PublisherFilter')
+                    br
+                    label Аудитория:
+                        input(type='text' name='audith' id='AudithFilter')
+                    br
+                    input(type='button' value='Найти' onclick='filterButton()')
+                    br
+            .details_block
+                details
+                    summary Сортировка
+                    br
+                    | Первый уровень:
+                    select(name='audith' id='selectLevel1' onchange='getOptions()')
+                        option(value='No' selected) Нет
+                        option(value='MangaName') Название
+                        option(value='Author') Автор
+                        option(value='Audith') Аудитория
+                    label По убыванию?
+                        input(type = 'checkbox' id = 'sortOrder1')
+                    br
+                    br
+                    | Второй уровень:
+                    select(name='author' id='selectLevel2' onchange='getOptions()')
+                        option(value='No' selected) Нет
+                        option(value='MangaName') Название
+                        option(value='Author') Автор
+                        option(value='Audith') Аудитория
+                    label По убыванию?
+                        input(type = 'checkbox' id = 'sortOrder2')
+                    br
+                    br
+                    | Третий уровень:
+                    select(name='name' id='selectLevel3' onchange='getOptions()')
+                        option(value='No' selected) Нет
+                        option(value='MangaName') Название
+                        option(value='Author') Автор
+                        option(value='Audith') Аудитория
+                    label По убыванию?
+                        input(type = 'checkbox' id = 'sortOrder3')
+                    br
+                    br
+                    input(type='button' value='Найти' onclick='sortButton()')
+        input(type='button' value='Сброс' onclick='resetButton()')
+        .tableBlock(id = 'table')
+    script(src = 'js/WorkingWithData.js')
+
+    // -   var i = 0
+    // .tableBlock
+    //     table
+    //         tr
+    //             each name in columnNames
+    //                 th=name
+    //         while i < 50
+    //             tr
+    //                 td=mangaNames[i]
+    //                 td=author[i]
+    //                 td=publisher[i]
+    //                 td=audith[i]
+    //                 td=ch_count[i]
+    //                 td=publish_time[i]
+    //                 td=sales_num[i]
+    //             - i++

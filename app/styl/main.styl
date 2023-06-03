@@ -1,0 +1,173 @@
+// Please delete before starting
+
+body
+	top 100px
+	color #212529
+	margin 0
+	padding 0
+	line-height 1.4
+	font-family -apple-system,BlinkMacSystemFont,Open Sans,Roboto,Helvetica Neue,Helvetica,sans-serif
+	overflow-x hidden
+	position relative
+	font-size 16pt
+	display block
+	box-sizing border-box
+	background #f2f2f3
+
+.centralBlock
+	margin auto
+	width 90%
+	min-height 700px
+	min-width 100px
+	a
+		color black
+		text-decoration none
+	a:hover
+		text-decoration orange
+		color orange
+	.galleryGrid
+		display grid
+		grid-template-columns repeat(5,1fr)
+		//grid-template-rows 1fr
+		column-gap 50px
+		justify-items stretch
+		grid-template-areas "A B C D E"
+		height auto
+		margin-bottom 7vh
+		background #ffffff
+		padding 10px
+		align-items center
+		vertical-align center
+		//padding-bottom 30px
+		img
+			height 100%
+			width 100%
+			margin-top 30px
+			padding-bottom 30px
+			padding-right 10px
+			padding-left 10px
+			//border thin solid black
+		img:hover
+			width 110%
+			height 110%
+			transition 0.5s
+			z-index 99999
+			margin-top 0
+			padding-bottom 10px
+		img:not(:hover)
+			transition 0.5s
+		.img1
+			grid-area A
+			//border thin solid black
+		.img2
+			grid-area B
+		.img3
+			grid-area C
+		.img4
+			grid-area D
+		.img5
+			grid-area E
+	.textGrid
+		padding 20px
+		display grid
+		grid-template-columns 20% 80%
+		grid-template-rows 1fr 1fr 1fr
+		column-gap 40px
+		row-gap 30px
+		justify-items stretch
+		grid-template-areas "A B""C D""E F"
+		background #ffffff
+		margin-bottom 100px
+		//padding 10px
+		img:hover
+			width 105%
+			height 105%
+			transition 0.5s
+			z-index 99999
+			margin-top 0
+			padding-bottom 10px
+		img:not(:hover)
+			transition 0.5s
+		p
+			text-align justify
+			padding-right 40px
+		img
+			height 100%
+			width 100%
+		.img1
+			//border solid black thin
+			grid-area A
+		.text1
+			grid-area B
+
+		.img2
+			grid-area C
+		.text2
+			grid-area D
+		.img3
+			grid-area E
+		.text3
+			grid-area F
+
+
+
+.menuFlex
+	background-color #e48f13
+	position fixed
+	padding padding/2
+	display flex
+	flex-direction row
+	justify-content space-around
+	width 100%
+	top 0
+	padding 0 20px
+	height 57px
+	//overflow hidden
+	.imgItem
+		margin-top 3px
+		margin-right 40px
+		padding-left 0
+		margin-left 0
+	span
+		top 10px
+		margin-top 1px
+		background-color #e48f13
+		padding 20px
+		//border 1px solid black
+	.menuItem
+		text-align: center;
+		top 10px
+		//
+		// border 1px solid black
+		justify-content space-around
+		vertical-align center
+		line-height: 2.5em;
+		color white
+		a
+			text-decoration none
+			font-weight: bold
+			color white
+		a:hover
+			background-color #ffa332
+			padding 5px
+			transition 0.3s
+@media (max-width: 520px)
+	.menuFlex
+		span
+			line-height 1em
+		.menuItem
+			line-height 2em
+
+@media (max-width: 700px)
+	.centralBlock
+		.galleryGrid
+			grid-template-columns 1fr
+			grid-template-rows auto auto auto auto auto
+			grid-template-areas "A""B""C""D""E"
+		.textGrid
+			grid-template-columns 1fr
+			grid-template-rows auto auto auto auto auto auto
+			grid-template-areas "A""B""C""D""E""F"
+
+@import about
+@import list

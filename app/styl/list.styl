@@ -1,0 +1,66 @@
+.details_block
+  display block
+  margin 20px
+  //border thin solid black
+  .field
+    //border thin solid black
+    margin 10px
+
+.tableBlock
+  padding-bottom 10px
+  overflow auto
+  background white
+
+table
+  border-collapse collapse
+  width 100%
+  text-align center
+
+table, td, th
+  border 1px solid black
+
+.galleryGridsort
+  display grid
+  grid-template-columns  repeat(3,1fr)
+  grid-template-rows 1fr
+  column-gap 20px
+  justify-items stretch
+  grid-template-areas " A B C "
+  height auto
+  margin-bottom 4vh
+  background #ffffff
+  padding 10px
+  align-items center
+  vertical-align center
+  //padding-bottom 30px
+  //border thin solid black
+  .img1
+    grid-area A
+  .img2
+    grid-area B
+  .img3
+    grid-area C
+@media(max-width:800px)
+  .tableBlock
+    width 100%
+    table
+      font-size 10px
+      width 100%
+  .details_block
+    font-size 10pt
+  summary
+    font-size 10pt
+  legend
+    font-size 10pt
+
+  .galleryGridsort
+    grid-template-columns  1fr
+    grid-template-rows auto auto auto
+    grid-template-areas " A" "B" "C "
+
+@media(max-width:800px)
+  .tableBlock
+    width 100%
+    table
+      font-size 10px
+      width 100%
