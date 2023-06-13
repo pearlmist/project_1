@@ -5,7 +5,9 @@ const publisher = ['Shueisha','Shogakukan','Shueisha','Shueisha','Shogakukan','A
 const audith = ['Сёнэн','Сэйнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Кодомо','Сэйнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сэйнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сэйнэн','Сёдзё','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёнэн','Сёдзё','Сэйнэн','Сэйнэн','Сэйнэн']
 const ch_count = [102,201,42,72,101,25,31,200,23,52,45,111,74,131,32,23,27,86,26,127,37,158,92,60,36,65,63,28,27,58,37,42,33,33,77,22,34,78,152,38,16,30,35,18,5,37,49,48,56,30]
 const publish_time = ['1997 - настоящее время','1968 – настоящее время','1984–1995','1999–2014','1994 – настоящее время','1973–1983','1990–1996','1976–2016','2016–2020','1997 - настоящее время','1969–1996','1983–2014','2001–2016','1987 – настоящее время','2009–2021','1952–1968','1983–1988','1992 – настоящее время','1981–1986','1989 – настоящее время','1998–2015','1991 – настоящее время','1981 - настоящее время','1971–1986','1998 – настоящее время','1979 - настоящее время','2006–2017','1994–1999','2001–2010','2006 - настоящее время','1992–2003','1988–1997','1990–2003','1999–2008','2003–2019','1988–1996','1992–1999','1994–2010','1992 - настоящее время','1987–1996','2018 - настоящее время','2014 - настоящее время','1985–1991','1978–1984','1972–1973','1989–1996','1976 - настоящее время','1995–2013','1996–2008','2011–2018']
-const sales_num = [500,300,260,270,233,176,157,157,150,150,140,130,120,120,110,100,100,100,100,96,82,80,80,80,79,75,72,72,70.3,70,61,60,60,60,55,5,55,55,53,53,53,50,50,50,50,50,50,50,50,50,47]
+const sales_num = [500,300,260,270,233,176,157,157,150,150,140,130,120,120,110,100,100,100,100,96,82,80,80,80,79,75,72,72,70.3,70,61,60,60,60,55,5,55,55,53,53,53,50,50,50,50,50,50,50,50,50]
+
+
 
 
 let manga = {
@@ -99,7 +101,7 @@ let updatedManga = {
 
     getResultLogOpr: function(valueLeft, opr, valueRight) {
         if (opr == '==') {
-            return valueLeft == valueRight;
+            return valueLeft.indexOf(valueRight) !== -1;
         }
         if (opr == '!=') {
             return valueLeft != valueRight;
@@ -169,6 +171,23 @@ let options = {
     Audith: 'Аудитория'
 }
 
+let arrOptions = [];
+for (let key in options) {
+    let newOption = document.createElement('option');
+    let optionText = document.createTextNode(options[key]);
+    newOption.appendChild(optionText);
+    newOption.setAttribute('value', key);
+    arrOptions.push(newOption);
+}
+
+function drawTable() {
+    document.getElementById('table').innerHTML = updatedManga.print();
+    let svg = d3.select("svg")
+        .attr("height", height)
+        .attr("width", width);
+    drawGraph(svg);
+}
+
 drawTable = () => document.getElementById('table').innerHTML = updatedManga.print();
 
 function sortButton(){
@@ -227,95 +246,43 @@ function resetButton(){
     drawTable();
 }
 
-function getOptions() {
-    let arrOptions = [];
-    for (let key in options) {
-        let newOption = document.createElement('option');
-        let optionText = document.createTextNode(options[key]);
-        newOption.appendChild(optionText);
-        newOption.setAttribute('value', key);
-        arrOptions.push(newOption);
+function getActualOptions() {
+    for (let count = 1; count <= 3; count++) {
+        addOptionsToSelect(count);
     }
-    let selectedOption1 = document.getElementById("selectLevel1").options[document.getElementById("selectLevel1").selectedIndex];
-    let selectedOption2 = document.getElementById("selectLevel2").options[document.getElementById("selectLevel2").selectedIndex];
-    let selectedOption3 = document.getElementById("selectLevel3").options[document.getElementById("selectLevel3").selectedIndex];
+    for (let count = 1; count <= 3; count++) {
+        removeOptions(count);
+    }
+}
 
+function addOptionsToSelect(count){
     for (let i = 0; i < arrOptions.length; i++) {
-        let addFlag = true;
-        for(let j = 0; j < document.getElementById("selectLevel1").options.length; j++){
-            if (document.getElementById("selectLevel1").options[j].value === arrOptions[i].value)
-                addFlag = false;
+        let flag = true;
+        for (let j = 0; j < document.getElementById(`selectLevel${count}`).options.length; j++) {
+            if (document.getElementById(`selectLevel${count}`).options[j].value === arrOptions[i].value) {
+                flag = false;
+                break;
+            }
         }
-        if (addFlag)
-            document.getElementById("selectLevel1").insertBefore(arrOptions[i].cloneNode(true), document.getElementById("selectLevel1").options[i]);
+        if (flag)
+            document.getElementById(`selectLevel${count}`)
+                .insertBefore(
+                    arrOptions[i].cloneNode(true),
+                    document.getElementById(`selectLevel${count}`).options[i]
+                );
     }
+}
 
+function removeOptions(count){
     let index = 0;
-
-    while (index < document.getElementById("selectLevel1").length) {
-        if (document.getElementById("selectLevel1").options[index].value === selectedOption2.value
-            && selectedOption2.value !== "No") {
-            document.getElementById("selectLevel1").options[index] = null;
-            index = 0;
-        }
-        if (document.getElementById("selectLevel1").options[index].value === selectedOption3.value
-            && selectedOption3.value !== "No") {
-            document.getElementById("selectLevel1").options[index] = null;
-            index = 0;
-        }
-        index++;
-    }
-
-    for (let i = 0; i < arrOptions.length; i++) {
-        let addFlag = true;
-        for(let j = 0; j < document.getElementById("selectLevel2").options.length; j++){
-            if (document.getElementById("selectLevel2").options[j].value === arrOptions[i].value)
-                addFlag = false;
-        }
-        if (addFlag)
-            document.getElementById("selectLevel2").insertBefore(arrOptions[i].cloneNode(true), document.getElementById("selectLevel2").options[i]);
-
-    }
-
-    index = 0
-
-    while (index < document.getElementById("selectLevel2").length) {
-        if (document.getElementById("selectLevel2").options[index].value === selectedOption1.value
-            && selectedOption1.value !== "No") {
-            document.getElementById("selectLevel2").options[index] = null;
-            index = 0;
-        }
-        if (document.getElementById("selectLevel2").options[index].value === selectedOption3.value
-            && selectedOption3.value !== "No") {
-            document.getElementById("selectLevel2").options[index] = null;
-            index = 0;
-        }
-        index++;
-    }
-
-    for (let i = 0; i < arrOptions.length; i++) {
-        let addFlag = true;
-        for(let j = 0; j < document.getElementById("selectLevel3").options.length; j++){
-            if (document.getElementById("selectLevel3").options[j].value === arrOptions[i].value)
-                addFlag = false;
-        }
-        if (addFlag)
-            document.getElementById("selectLevel3").insertBefore(arrOptions[i].cloneNode(true), document.getElementById("selectLevel3").options[i]);
-
-    }
-
-    index = 0
-
-    while (index < document.getElementById("selectLevel3").length) {
-        if (document.getElementById("selectLevel3").options[index].value === selectedOption1.value
-            && selectedOption1.value !== "No") {
-            document.getElementById("selectLevel3").options[index] = null;
-            index = 0;
-        }
-        if (document.getElementById("selectLevel3").options[index].value === selectedOption2.value
-            && selectedOption2.value !== "No") {
-            document.getElementById("selectLevel3").options[index] = null;
-            index = 0;
+    while (index < document.getElementById(`selectLevel${count}`).length) {
+        for (let i = 1; i <= 3; i++) {
+            if (i === count) continue;
+            if (document.getElementById(`selectLevel${count}`).options[index].value === document.getElementById(`selectLevel${i}`).value
+                && document.getElementById(`selectLevel${i}`).value !== "No") {
+                document.getElementById(`selectLevel${count}`).options[index] = null;
+                index = 0;
+            }
         }
         index++;
     }

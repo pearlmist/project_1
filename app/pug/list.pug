@@ -12,6 +12,9 @@ block variables
     -   const publish_time = ['1997 - настоящее время','1968 – настоящее время','1984–1995','1999–2014','1994 – настоящее время','1973–1983','1990–1996','1976–2016','2016–2020','1997 - настоящее время','1969–1996','1983–2014','2001–2016','1987 – настоящее время','2009–2021','1952–1968','1983–1988','1992 – настоящее время','1981–1986','1989 – настоящее время','1998–2015','1991 – настоящее время','1981 - настоящее время','1971–1986','1998 – настоящее время','1979 - настоящее время','2006–2017','1994–1999','2001–2010','2006 - настоящее время','1992–2003','1988–1997','1990–2003','1999–2008','2003–2019','1988–1996','1992–1999','1994–2010','1992 - настоящее время','1987–1996','2018 - настоящее время','2014 - настоящее время','1985–1991','1978–1984','1972–1973','1989–1996','1976 - настоящее время','1995–2013','1996–2008','2011–2018']
     -   const sales_num = ['500 миллионов','300 миллионов','260 миллионов','270 миллионов','233 миллионов','176 миллионов','157 миллионов','157 миллионов','150 миллионов','150 миллионов','140 миллионов','130 миллионов','120 миллионов','120 миллионов','110 миллионов','100 миллионов','100 миллионов','100 миллионов','100 миллионов','96 миллионов','82 миллионов','80 миллионов','80 миллионов','80 миллионов','79 миллионов','75 миллионов','72 миллионов','72 миллионов','70.3 миллионов','70 миллионов','61 миллионов','60 миллионов','60 миллионов','60 миллионов','55,5 миллионов','55 миллионов','55 миллионов','53 миллионов','53 миллионов','53 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','50 миллионов','47 миллионов']
 
+block source
+    script(src="http://d3js.org/d3.v7.js")
+
 block content
     body(onload = "drawTable()")
         .galleryGridsort
@@ -22,28 +25,34 @@ block content
                         .field
                             legend Значение по оси OX:
                                 br
-                                input(type='radio' name='education' value='first')
+                                input(type='radio' name='ox' value='Audith' checked="checked")
                                 |  Аудитория
                                 br
-                                input(type='radio' name='education' value='second')
+                                input(type='radio' name='ox' value='Publisher')
                                 |  Издатель
                                 br
-                                input(type='radio' name='education' value='third')
+                                input(type='radio' name='ox' value='Author')
                                 |  Автор(ы)
+                                br
+                        .field
+                            legend Тип графика:
+                                br
+                                input(type='radio' name='type' value='dotted' checked="checked")
+                                |  Точечный
+                                br
+                                input(type='radio' name='type' value='histogram')
+                                |  Гистограмма
                                 br
                         .field
                             legend Результат:
                                 br
-                                input(type='radio' name='subject' value='web')
-                                |  Количество томов
+                                input(type='checkbox' name='oy')
+                                |  Максимальные продажи
                                 br
-                                input(type='radio' name='subject' value='db')
-                                |  Примерные продажи
+                                input(type='checkbox' name='oy')
+                                |  Минимальные продажи
                                 br
-                                input(type='radio' name='subject' value='oop')
-                                |  Публикация
-                                br
-                                input(type="button" value="Построить")
+                                input(type="button" value="Построить" id="graphButton")
             .details_block
                 details
                     summary Фильтр
@@ -67,53 +76,43 @@ block content
                     summary Сортировка
                     br
                     | Первый уровень:
-                    select(name='audith' id='selectLevel1' onchange='getOptions()')
+                    select(name='audith' id='selectLevel1' onchange='getActualOptions()')
                         option(value='No' selected) Нет
                         option(value='MangaName') Название
                         option(value='Author') Автор
                         option(value='Audith') Аудитория
+                        option(value='Sales_num') Продажи
                     label По убыванию?
                         input(type = 'checkbox' id = 'sortOrder1')
                     br
                     br
                     | Второй уровень:
-                    select(name='author' id='selectLevel2' onchange='getOptions()')
+                    select(name='author' id='selectLevel2' onchange='getActualOptions()')
                         option(value='No' selected) Нет
                         option(value='MangaName') Название
                         option(value='Author') Автор
                         option(value='Audith') Аудитория
+                        option(value='Sales_num') Продажи
                     label По убыванию?
                         input(type = 'checkbox' id = 'sortOrder2')
                     br
                     br
                     | Третий уровень:
-                    select(name='name' id='selectLevel3' onchange='getOptions()')
+                    select(name='name' id='selectLevel3' onchange='getActualOptions()')
                         option(value='No' selected) Нет
                         option(value='MangaName') Название
                         option(value='Author') Автор
                         option(value='Audith') Аудитория
+                        option(value='Sales_num') Продажи
                     label По убыванию?
                         input(type = 'checkbox' id = 'sortOrder3')
                     br
                     br
                     input(type='button' value='Найти' onclick='sortButton()')
         input(type='button' value='Сброс' onclick='resetButton()')
+        input(type = "button" value = "Скрыть таблицу" id = 'hideButton')
+        svg
         .tableBlock(id = 'table')
     script(src = 'js/WorkingWithData.js')
+    script(src = 'js/graph.js')
 
-    // -   var i = 0
-    // .tableBlock
-    //     table
-    //         tr
-    //             each name in columnNames
-    //                 th=name
-    //         while i < 50
-    //             tr
-    //                 td=mangaNames[i]
-    //                 td=author[i]
-    //                 td=publisher[i]
-    //                 td=audith[i]
-    //                 td=ch_count[i]
-    //                 td=publish_time[i]
-    //                 td=sales_num[i]
-    //             - i++
